@@ -2,34 +2,35 @@ package br.com.fiapride.model;
 
 public class Relogio {
 
-    public boolean resistenteAgua;
-    public boolean analogico;
-    public String estado; // "novo", "usado", etc.
+    private boolean resistenteAgua;
+    private boolean analogico;
+    private String estado; // "novo", "usado", etc.
 
-    // Construtor padrão — necessário para usar new Relogio()
+    // Construtor padrão
     public Relogio() {
         this.resistenteAgua = false;
         this.analogico = true;
         this.estado = "desconhecido";
     }
 
-    // Construtor com parâmetros (opcional, caso queira usar)
+    // Construtor com parâmetros 
     public Relogio(boolean resistenteAgua, boolean analogico, String estadoInicial) {
-        this.resistenteAgua = resistenteAgua;
-        this.analogico = analogico;
-        this.estado = (estadoInicial == null || estadoInicial.isBlank())
+        
+        this.setResistenteAgua(resistenteAgua);
+        this.setAnalogico(analogico);
+        this.setEstado(estadoInicial == null || estadoInicial.isBlank()
                 ? "desconhecido"
-                : estadoInicial.trim().toLowerCase();
+                : estadoInicial);
     }
 
-    // Método para alterar o estado do relógio
+    
     public void alterarEstado(String novoEstado) {
         if (novoEstado == null || novoEstado.isBlank()) {
             System.out.println("Estado inválido.");
             return;
         }
 
-        String e = novoEstado.trim().toLowerCase();
+        String e = normalizar(novoEstado);
 
         if (e.equals("novo")) {
             this.estado = "novo";
@@ -60,17 +61,37 @@ public class Relogio {
         }
     }
 
-    // Getters/Setters (se você quiser continuar usando)
-    public boolean isResistenteAgua() { return resistenteAgua; }
-    public void setResistenteAgua(boolean resistenteAgua) { this.resistenteAgua = resistenteAgua; }
+    //Getters/Setters
 
-    public boolean isAnalogico() { return analogico; }
-    public void setAnalogico(boolean analogico) { this.analogico = analogico; }
+    public boolean isResistenteAgua() { 
+        return resistenteAgua; 
+    }
 
-    public String getEstado() { return estado; }
+   
+    public void setResistenteAgua(boolean resistenteAgua) { 
+        this.resistenteAgua = resistenteAgua; 
+    }
+
+    public boolean isAnalogico() { 
+        return analogico; 
+    }
+
+    public void setAnalogico(boolean analogico) { 
+        this.analogico = analogico; 
+    }
+
+    public String getEstado() { 
+        return estado; 
+    }
+
     public void setEstado(String estado) {
         if (estado != null && !estado.isBlank()) {
-            this.estado = estado.trim().toLowerCase();
+            this.estado = normalizar(estado);
         }
+    }
+
+    
+    private String normalizar(String s) {
+        return s.trim().toLowerCase();
     }
 }
